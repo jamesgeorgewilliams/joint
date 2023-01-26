@@ -18,36 +18,11 @@
         }
     });
 
-    var port = {
-        label: {
-            position: {
-                name: 'left'
-            },
-            markup: [{
-                tagName: 'text',
-                selector: 'label'
-            }]
-        },
-        attrs: { 
-            portBody: { 
-                magnet: true,
-                width: 16,
-                height: 16,
-                x: -8,
-                y: -8,
-                fill:  '#03071E'
-            }, 
-            label: { 
-                text: 'port' 
-            }
-        },
-        markup: [{
-            tagName: 'rect',
-            selector: 'portBody'
-        }]
+    const port = {
+        id: 'custom-port-id'
     };
 
-    var model = new joint.shapes.standard.Rectangle({
+    var element = new joint.shapes.standard.Rectangle({
         position: { x: 275, y: 50 },
         size: { width: 90, height: 90 },
         attrs: {
@@ -60,7 +35,17 @@
         }
     });
 
-    model.addPort(port); // add a port using Port API
+    // model.addPort(port); // add a port using Port API
 
-    graph.addCell(model);
+    graph.addCell(element);
+
+    element.portProp('custom-port-id', 'attrs/circle', { r: 8, fill: 'darkslateblue' });
+
+    const portId = element.getPorts()[0].id;
+
+    element.portProp(portId, 'custom', { testAttribute: true });
+
+    console.log(element.portProp(portId, 'custom'));  // {testAttribute: true}
+
+    // element.portProp(portId, 'attrs/circle/fill', 'tomato');
 }());
